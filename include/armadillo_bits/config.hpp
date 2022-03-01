@@ -177,7 +177,7 @@
 //// The maximum number of threads to use for OpenMP based parallelisation;
 //// it must be an integer that is at least 1.
 
-// #define ARMA_NO_DEBUG
+#define ARMA_NO_DEBUG
 //// Uncomment the above line if you want to disable all run-time checks.
 //// This will result in faster code, but you first need to make sure that your code runs correctly!
 //// We strongly recommend to have the run-time checks enabled during development,
