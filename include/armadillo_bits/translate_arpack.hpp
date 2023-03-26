@@ -17,7 +17,7 @@
 
 
 
-#if defined(ARMA_USE_ARPACK)
+#ifdef ARMA_USE_ARPACK
 
 //! \namespace arpack namespace for ARPACK functions
 namespace arpack

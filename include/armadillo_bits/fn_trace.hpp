@@ -102,7 +102,10 @@ trace(const Glue<T1, T2, glue_times>& X)
   
   arma_debug_assert_trans_mul_size< partial_unwrap<T1>::do_trans, partial_unwrap<T2>::do_trans >(A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
   
-  if( (A.n_elem == 0) || (B.n_elem == 0) )  { return eT(0); }
+  if( (A.n_elem == 0) || (B.n_elem == 0) )
+    {
+    return eT(0);
+    }
   
   const uword A_n_rows = A.n_rows;
   const uword A_n_cols = A.n_cols;
@@ -221,7 +224,10 @@ trace(const Glue<T1, T2, glue_times>& X)
   
   arma_debug_assert_trans_mul_size< partial_unwrap<T1>::do_trans, partial_unwrap<T2>::do_trans >(A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
   
-  if( (A.n_elem == 0) || (B.n_elem == 0) )  { return eT(0); }
+  if( (A.n_elem == 0) || (B.n_elem == 0) )
+    {
+    return eT(0);
+    }
   
   const uword A_n_rows = A.n_rows;
   const uword A_n_cols = A.n_cols;
@@ -510,7 +516,10 @@ trace(const SpGlue<T1, T2, spglue_times>& expr)
   
   arma_debug_assert_mul_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
   
-  if( (A.n_nonzero == 0) || (B.n_nonzero == 0) )  { return eT(0); }
+  if( (A.n_nonzero == 0) || (B.n_nonzero == 0) )
+    {
+    return eT(0);
+    }
   
   const uword N = (std::min)(A.n_rows, B.n_cols);
   
@@ -567,7 +576,10 @@ trace(const SpGlue<SpOp<T1, spop_htrans>, T2, spglue_times>& expr)
   // NOTE: deliberately swapped A.n_rows and A.n_cols to take into account the requested transpose operation
   arma_debug_assert_mul_size(A.n_cols, A.n_rows, B.n_rows, B.n_cols, "matrix multiplication");
   
-  if( (A.n_nonzero == 0) || (B.n_nonzero == 0) )  { return eT(0); }
+  if( (A.n_nonzero == 0) || (B.n_nonzero == 0) )
+    {
+    return eT(0);
+    }
   
   const uword N = (std::min)(A.n_cols, B.n_cols);
   
@@ -623,7 +635,10 @@ trace(const SpGlue<SpOp<T1, spop_htrans>, T2, spglue_times>& expr)
   // NOTE: deliberately swapped A.n_rows and A.n_cols to take into account the requested transpose operation
   arma_debug_assert_mul_size(A.n_cols, A.n_rows, B.n_rows, B.n_cols, "matrix multiplication");
   
-  if( (A.n_nonzero == 0) || (B.n_nonzero == 0) )  { return eT(0); }
+  if( (A.n_nonzero == 0) || (B.n_nonzero == 0) )
+    {
+    return eT(0);
+    }
   
   const uword N = (std::min)(A.n_cols, B.n_cols);
   

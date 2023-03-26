@@ -77,7 +77,7 @@ stddev(const T1& X, const uword norm_type, const uword dim)
 
 template<typename T>
 arma_warn_unused
-inline
+arma_inline
 typename arma_scalar_only<T>::result
 stddev(const T&)
   {

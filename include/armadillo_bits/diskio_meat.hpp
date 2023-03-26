@@ -469,20 +469,7 @@ diskio::convert_token(eT& val, const std::string& token)
       {
       // unsigned integer
       
-      if((str[0] == '-') && (N >= 2))
-        {
-        val = eT(0);  
-        
-        if((str[1] == '-') || (str[1] == '+')) { return false; }
-        
-        const char* str_offset1 = &(str[1]);
-        
-        std::strtoull(str_offset1, &endptr, 10);
-        
-        if(str_offset1 == endptr)  { return false; }
-        
-        return true;
-        }
+      if(str[0] == '-')  { val = eT(0);  return true; }
       
       val = eT( std::strtoull(str, &endptr, 10) );
       }

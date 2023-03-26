@@ -427,7 +427,7 @@ SpRow<eT>::end_row(const uword row_num) const
 
 
   
-#if defined(ARMA_EXTRA_SPROW_MEAT)
+#ifdef ARMA_EXTRA_SPROW_MEAT
   #include ARMA_INCFILE_WRAP(ARMA_EXTRA_SPROW_MEAT)
 #endif
 

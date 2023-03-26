@@ -125,20 +125,23 @@ glue_kron::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_kron>& 
   
   typedef typename T1::elem_type eT;
   
-  const quasi_unwrap<T1> UA(X.A);
-  const quasi_unwrap<T2> UB(X.B);
+  const unwrap<T1> A_tmp(X.A);
+  const unwrap<T2> B_tmp(X.B);
   
-  if(UA.is_alias(out) || UB.is_alias(out))
+  const Mat<eT>& A = A_tmp.M;
+  const Mat<eT>& B = B_tmp.M;
+  
+  if( (&out != &A) && (&out != &B) )
     {
-    Mat<eT> tmp;
-    
-    glue_kron::direct_kron(tmp, UA.M, UB.M);
-    
-    out.steal_mem(tmp);
+    glue_kron::direct_kron(out, A, B); 
     }
   else
     {
-    glue_kron::direct_kron(out, UA.M, UB.M); 
+    Mat<eT> tmp;
+    
+    glue_kron::direct_kron(tmp, A, B);
+    
+    out.steal_mem(tmp);
     }
   }
 

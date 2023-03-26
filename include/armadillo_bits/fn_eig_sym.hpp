@@ -32,11 +32,10 @@ eig_sym
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::elem_type eT;
+  // unwrap_check not used as T1::elem_type and T1::pod_type may not be the same.
+  // furthermore, it doesn't matter if X is an alias of eigval, as auxlib::eig_sym() makes a copy of X
   
-  Mat<eT> A(X.get_ref());
-  
-  const bool status = auxlib::eig_sym(eigval, A);
+  const bool status = auxlib::eig_sym(eigval, X);
   
   if(status == false)
     {
@@ -61,21 +60,16 @@ eig_sym
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
-  
-  Col< T> eigval;
-  Mat<eT> A(X.get_ref());
-  
-  const bool status = auxlib::eig_sym(eigval, A);
+  Col<typename T1::pod_type> out;
+  const bool status = auxlib::eig_sym(out, X);
 
   if(status == false)
     {
-    eigval.reset();
+    out.soft_reset();
     arma_stop_runtime_error("eig_sym(): decomposition failed");
     }
   
-  return eigval;
+  return out;
   }
 
 
@@ -94,6 +88,13 @@ eig_sym_helper
   )
   {
   arma_extra_debug_sigprint();
+  
+  // if(auxlib::rudimentary_sym_check(X) == false)
+  //   {
+  //   if(is_cx<eT>::no )  { arma_debug_warn_level(1, caller_sig, ": given matrix is not symmetric"); }
+  //   if(is_cx<eT>::yes)  { arma_debug_warn_level(1, caller_sig, ": given matrix is not hermitian"); }
+  //   return false;
+  //   }
   
   if((arma_config::debug) && (auxlib::rudimentary_sym_check(X) == false))
     {

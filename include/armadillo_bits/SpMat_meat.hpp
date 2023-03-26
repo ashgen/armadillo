@@ -1123,7 +1123,10 @@ SpMat<eT>::operator*=(const Base<eT, T1>& y)
 
 
 
-// NOTE: use of this function is not advised; it is implemented only for completeness
+/**
+ * Don't use this function.  It's not mathematically well-defined and wastes
+ * cycles to trash all your data.  This is dumb.
+ */
 template<typename eT>
 template<typename T1>
 inline
@@ -1355,8 +1358,8 @@ SpMat<eT>::operator=(const SpSubview<eT>& X)
       const uword sv_col_start = X.aux_col1;
       const uword sv_col_end   = X.aux_col1 + X.n_cols - 1;
       
-      typename SpMat<eT>::const_col_iterator m_it     = X.m.begin_col_no_sync(sv_col_start);
-      typename SpMat<eT>::const_col_iterator m_it_end = X.m.end_col_no_sync(sv_col_end);
+      typename SpMat<eT>::const_col_iterator m_it     = X.m.begin_col(sv_col_start);
+      typename SpMat<eT>::const_col_iterator m_it_end = X.m.end_col(sv_col_end);
       
       uword count = 0;
       
@@ -3326,32 +3329,6 @@ SpMat<eT>::operator()(const uword i) const
  * If there is nothing at that position, 0 is returned.
  */
 
-#if defined(__cpp_multidimensional_subscript)
-  
-  template<typename eT>
-  arma_inline
-  arma_warn_unused
-  SpMat_MapMat_val<eT>
-  SpMat<eT>::operator[] (const uword in_row, const uword in_col)
-    {
-    return SpMat_MapMat_val<eT>((*this), cache, in_row, in_col);
-    }
-  
-  
-  
-  template<typename eT>
-  arma_inline
-  arma_warn_unused
-  eT
-  SpMat<eT>::operator[] (const uword in_row, const uword in_col) const
-    {
-    return get_value(in_row, in_col);
-    }
-  
-#endif
-
-
-
 template<typename eT>
 arma_inline
 arma_warn_unused
@@ -3604,21 +3581,6 @@ SpMat<eT>::has_nan() const
 
 
 
-template<typename eT>
-inline
-arma_warn_unused
-bool
-SpMat<eT>::has_nonfinite() const
-  {
-  arma_extra_debug_sigprint();
-  
-  sync_csc();
-  
-  return (arrayops::is_finite(values, n_nonzero) == false);
-  }
-
-
-
 //! returns true if the given index is currently in range
 template<typename eT>
 arma_inline
@@ -3842,7 +3804,10 @@ SpMat<eT>::resize(const uword in_rows, const uword in_cols)
   {
   arma_extra_debug_sigprint();
   
-  if( (n_rows == in_rows) && (n_cols == in_cols) )  { return; }
+  if( (n_rows == in_rows) && (n_cols == in_cols) )
+    {
+    return;
+    }
   
   if( (n_elem == 0) || (n_nonzero == 0) )
     {
@@ -4558,11 +4523,13 @@ SpMat<eT>::reset_cache()
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    const std::lock_guard<std::mutex> lock(cache_mutex);
+    cache_mutex.lock();
     
     cache.reset();
     
     sync_state = 0;
+    
+    cache_mutex.unlock();
     }
   #else
     {
@@ -5191,13 +5158,13 @@ SpMat<eT>::init(const SpMat<eT>& x)
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     if(x.sync_state == 1)
       {
-      const std::lock_guard<std::mutex> lock(x.cache_mutex);
-      
+      x.cache_mutex.lock();
       if(x.sync_state == 1)
         {
         (*this).init(x.cache);
         init_done = true;
         }
+      x.cache_mutex.unlock();
       }
   #else
     if(x.sync_state == 1)
@@ -5813,8 +5780,6 @@ SpMat<eT>::steal_mem(SpMat<eT>& x)
   
   if(layout_ok)
     {
-    arma_extra_debug_print("SpMat::steal_mem(): stealing memory");
-    
     x.sync_csc();
     
     steal_mem_simple(x);
@@ -5825,8 +5790,6 @@ SpMat<eT>::steal_mem(SpMat<eT>& x)
     }
   else
     {
-    arma_extra_debug_print("SpMat::steal_mem(): copying memory");
-    
     (*this).operator=(x);
     }
   }
@@ -6799,9 +6762,11 @@ SpMat<eT>::sync_cache() const
     {
     if(sync_state == 0)
       {
-      const std::lock_guard<std::mutex> lock(cache_mutex);
+      cache_mutex.lock();
       
       sync_cache_simple();
+      
+      cache_mutex.unlock();
       }
     }
   #else
@@ -6849,9 +6814,11 @@ SpMat<eT>::sync_csc() const
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     if(sync_state == 1)
       {
-      const std::lock_guard<std::mutex> lock(cache_mutex);
+      cache_mutex.lock();
       
       sync_csc_simple();
+      
+      cache_mutex.unlock();
       }
   #else
     {
@@ -6967,7 +6934,7 @@ SpMat_aux::set_imag(SpMat< std::complex<T> >& out, const SpBase<T,T1>& X)
 
 
 
-#if defined(ARMA_EXTRA_SPMAT_MEAT)
+#ifdef ARMA_EXTRA_SPMAT_MEAT
   #include ARMA_INCFILE_WRAP(ARMA_EXTRA_SPMAT_MEAT)
 #endif
 

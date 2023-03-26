@@ -97,19 +97,9 @@ class field
   arma_inline arma_warn_unused       oT& operator()(const uword i);
   arma_inline arma_warn_unused const oT& operator()(const uword i) const;
   
-  #if defined(__cpp_multidimensional_subscript)
-  arma_inline arma_warn_unused       oT& operator[](const uword row, const uword col);
-  arma_inline arma_warn_unused const oT& operator[](const uword row, const uword col) const;
-  #endif
-  
   arma_inline arma_warn_unused       oT&         at(const uword row, const uword col);
   arma_inline arma_warn_unused const oT&         at(const uword row, const uword col) const;
-  
-  #if defined(__cpp_multidimensional_subscript)
-  arma_inline arma_warn_unused       oT& operator[](const uword row, const uword col, const uword slice);
-  arma_inline arma_warn_unused const oT& operator[](const uword row, const uword col, const uword slice) const;
-  #endif
-  
+
   arma_inline arma_warn_unused       oT&         at(const uword row, const uword col, const uword slice);
   arma_inline arma_warn_unused const oT&         at(const uword row, const uword col, const uword slice) const;
   
@@ -127,8 +117,8 @@ class field
   arma_inline arma_warn_unused const oT& back() const;
   
   
-  arma_deprecated inline field_injector<field> operator<<(const oT& val);
-  arma_deprecated inline field_injector<field> operator<<(const injector_end_of_row<>& x);
+  arma_cold inline field_injector<field> operator<<(const oT& val);
+  arma_cold inline field_injector<field> operator<<(const injector_end_of_row<>& x);
   
   
   inline       subview_field<oT> row(const uword row_num);
@@ -302,7 +292,7 @@ class field
   
   public:
   
-  #if defined(ARMA_EXTRA_FIELD_PROTO)
+  #ifdef ARMA_EXTRA_FIELD_PROTO
     #include ARMA_INCFILE_WRAP(ARMA_EXTRA_FIELD_PROTO)
   #endif
   };

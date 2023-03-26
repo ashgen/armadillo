@@ -44,31 +44,10 @@ struct arma_config
   #endif
   
   
-  #if defined(ARMA_OPTIMISE_BAND)
-    static constexpr bool optimise_band = true;
+  #if defined(ARMA_USE_ATLAS)
+    static constexpr bool atlas = true;
   #else
-    static constexpr bool optimise_band = false;
-  #endif
-  
-  
-  #if defined(ARMA_OPTIMISE_SYMPD)
-    static constexpr bool optimise_sympd = true;
-  #else
-    static constexpr bool optimise_sympd = false;
-  #endif
-  
-  
-  #if defined(ARMA_OPTIMISE_INVEXPR)
-    static constexpr bool optimise_invexpr = true;
-  #else
-    static constexpr bool optimise_invexpr = false;
-  #endif
-  
-  
-  #if defined(ARMA_CHECK_NONFINITE)
-    static constexpr bool check_nonfinite = true;
-  #else
-    static constexpr bool check_nonfinite = false;
+    static constexpr bool atlas = false;
   #endif
   
   
@@ -83,13 +62,6 @@ struct arma_config
     static constexpr bool blas = true;
   #else
     static constexpr bool blas = false;
-  #endif
-  
-  
-  #if defined(ARMA_USE_ATLAS)
-    static constexpr bool atlas = true;
-  #else
-    static constexpr bool atlas = false;
   #endif
   
   
@@ -206,13 +178,6 @@ struct arma_config
     static constexpr bool hidden_args = true;
   #else
     static constexpr bool hidden_args = false;
-  #endif
-  
-  
-  #if defined(ARMA_DONT_ZERO_INIT)
-    static constexpr bool zero_init = false;
-  #else
-    static constexpr bool zero_init = true;
   #endif
   
   

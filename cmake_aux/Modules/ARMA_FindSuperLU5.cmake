@@ -6,8 +6,15 @@
 #  SuperLU_INCLUDE_DIR  - directory of SuperLU headers
 
 find_path(SuperLU_INCLUDE_DIR slu_ddefs.h
-  PATHS ${CMAKE_SYSTEM_INCLUDE_PATH} /usr/include /usr/local/include /opt/local/include
-  PATH_SUFFIXES superlu SuperLU ""
+  /usr/include/superlu/
+  /usr/include/SuperLU/
+  /usr/include/
+  /usr/local/include/superlu/
+  /usr/local/include/SuperLU/
+  /usr/local/include/
+  /opt/local/include/superlu/
+  /opt/local/include/SuperLU/
+  /opt/local/include/
 )
 
 find_library(SuperLU_LIBRARY

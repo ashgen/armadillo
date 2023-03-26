@@ -88,7 +88,7 @@ class Row : public Mat<eT>
   inline            Row(const subview_cube<eT>& X);
   inline Row& operator=(const subview_cube<eT>& X);
   
-  arma_deprecated inline mat_injector<Row> operator<<(const eT val);
+  arma_cold inline mat_injector<Row> operator<<(const eT val);
   
   arma_inline arma_warn_unused const Op<Row<eT>,op_htrans>  t() const;
   arma_inline arma_warn_unused const Op<Row<eT>,op_htrans> ht() const;
@@ -138,9 +138,7 @@ class Row : public Mat<eT>
   
   template<typename T1> inline void shed_cols(const Base<uword, T1>& indices);
   
-  arma_deprecated inline void insert_cols(const uword col_num, const uword N, const bool set_to_zero);
-                  inline void insert_cols(const uword col_num, const uword N);
-  
+                        inline void insert_cols(const uword col_num, const uword N, const bool set_to_zero = true);
   template<typename T1> inline void insert_cols(const uword col_num, const Base<eT,T1>& X);
   
   
@@ -171,7 +169,7 @@ class Row : public Mat<eT>
   
   public:
   
-  #if defined(ARMA_EXTRA_ROW_PROTO)
+  #ifdef ARMA_EXTRA_ROW_PROTO
     #include ARMA_INCFILE_WRAP(ARMA_EXTRA_ROW_PROTO)
   #endif
   };

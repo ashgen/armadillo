@@ -144,7 +144,7 @@ struct SpProxy< SpCol<eT> >
     }
   
   arma_inline uword get_n_rows()    const { return Q.n_rows;    }
-  constexpr   uword get_n_cols()    const { return 1;           }
+  arma_inline uword get_n_cols()    const { return 1;           }
   arma_inline uword get_n_elem()    const { return Q.n_elem;    }
   arma_inline uword get_n_nonzero() const { return Q.n_nonzero; }
   
@@ -195,7 +195,7 @@ struct SpProxy< SpRow<eT> >
     Q.sync();
     }
   
-  constexpr   uword get_n_rows()    const { return 1;           }
+  arma_inline uword get_n_rows()    const { return 1;           }
   arma_inline uword get_n_cols()    const { return Q.n_cols;    }
   arma_inline uword get_n_elem()    const { return Q.n_elem;    }
   arma_inline uword get_n_nonzero() const { return Q.n_nonzero; }
@@ -300,7 +300,7 @@ struct SpProxy< SpSubview_col<eT> >
     }
   
   arma_inline uword get_n_rows()    const { return Q.n_rows;    }
-  constexpr   uword get_n_cols()    const { return 1;           }
+  arma_inline uword get_n_cols()    const { return 1;           }
   arma_inline uword get_n_elem()    const { return Q.n_elem;    }
   arma_inline uword get_n_nonzero() const { return Q.n_nonzero; }
   
@@ -402,7 +402,7 @@ struct SpProxy< SpSubview_row<eT> >
     Q.m.sync();
     }
   
-  constexpr   uword get_n_rows()    const { return 1;           }
+  arma_inline uword get_n_rows()    const { return 1;           }
   arma_inline uword get_n_cols()    const { return Q.n_cols;    }
   arma_inline uword get_n_elem()    const { return Q.n_elem;    }
   arma_inline uword get_n_nonzero() const { return Q.n_nonzero; }
@@ -454,7 +454,7 @@ struct SpProxy< spdiagview<eT> >
     }
   
   arma_inline uword get_n_rows()    const { return Q.n_rows;    }
-  constexpr   uword get_n_cols()    const { return 1;           }
+  arma_inline uword get_n_cols()    const { return 1;           }
   arma_inline uword get_n_elem()    const { return Q.n_elem;    }
   arma_inline uword get_n_nonzero() const { return Q.n_nonzero; }
   

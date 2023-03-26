@@ -54,8 +54,15 @@ eye(const uword n_rows, const uword n_cols, const typename arma_Mat_Col_Row_only
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  if(is_Col<obj_type>::value)  { arma_debug_check( (n_cols != 1), "eye(): incompatible size" ); }
-  if(is_Row<obj_type>::value)  { arma_debug_check( (n_rows != 1), "eye(): incompatible size" ); }
+  if(is_Col<obj_type>::value)
+    {
+    arma_debug_check( (n_cols != 1), "eye(): incompatible size" );
+    }
+  else
+  if(is_Row<obj_type>::value)
+    {
+    arma_debug_check( (n_rows != 1), "eye(): incompatible size" );
+    }
   
   return Gen<obj_type, gen_eye>(n_rows, n_cols);
   }
@@ -85,8 +92,15 @@ eye(const uword n_rows, const uword n_cols, const typename arma_SpMat_SpCol_SpRo
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  if(is_SpCol<obj_type>::value)  { arma_debug_check( (n_cols != 1), "eye(): incompatible size" ); }
-  if(is_SpRow<obj_type>::value)  { arma_debug_check( (n_rows != 1), "eye(): incompatible size" ); }
+  if(is_SpCol<obj_type>::value)
+    {
+    arma_debug_check( (n_cols != 1), "eye(): incompatible size" );
+    }
+  else
+  if(is_SpRow<obj_type>::value)
+    {
+    arma_debug_check( (n_rows != 1), "eye(): incompatible size" );
+    }
   
   obj_type out;
   

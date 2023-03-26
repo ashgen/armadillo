@@ -22,7 +22,7 @@
 
 
 
-class glue_solve_gen_default
+class glue_solve_gen
   {
   public:
   
@@ -34,28 +34,9 @@ class glue_solve_gen_default
     static constexpr bool is_xvec = false;
     };
   
-  template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_solve_gen_default>& X);
+  template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_solve_gen>& X);
   
-  template<typename eT, typename T1, typename T2> inline static bool apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr);
-  };
-
-
-
-class glue_solve_gen_full
-  {
-  public:
-  
-  template<typename T1, typename T2>
-  struct traits
-    {
-    static constexpr bool is_row  = false;
-    static constexpr bool is_col  = T2::is_col;
-    static constexpr bool is_xvec = false;
-    };
-  
-  template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_solve_gen_full>& X);
-  
-  template<typename eT, typename T1, typename T2, const bool has_user_flags = true> inline static bool apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr, const uword flags);
+  template<typename eT, typename T1, typename T2> inline static bool apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr, const uword flags);
   };
 
 
@@ -79,7 +60,7 @@ class glue_solve_tri_default
 
 
 
-class glue_solve_tri_full
+class glue_solve_tri
   {
   public:
   
@@ -91,7 +72,7 @@ class glue_solve_tri_full
     static constexpr bool is_xvec = false;
     };
   
-  template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_solve_tri_full>& X);
+  template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_solve_tri>& X);
   
   template<typename eT, typename T1, typename T2> inline static bool apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr, const uword flags);
   };

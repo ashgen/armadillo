@@ -73,19 +73,19 @@ struct strip_inv
   
   const T1& M;
   
-  static constexpr bool do_inv_gen = false;
-  static constexpr bool do_inv_spd = false;
+  static constexpr bool do_inv       = false;
+  static constexpr bool do_inv_sympd = false;
   };
 
 
 
 template<typename T1>
-struct strip_inv< Op<T1, op_inv_gen_default> >
+struct strip_inv< Op<T1, op_inv> >
   {
   typedef T1 stored_type;
   
   inline
-  strip_inv(const Op<T1, op_inv_gen_default>& X)
+  strip_inv(const Op<T1, op_inv>& X)
     : M(X.m)
     {
     arma_extra_debug_sigprint();
@@ -93,19 +93,19 @@ struct strip_inv< Op<T1, op_inv_gen_default> >
   
   const T1& M;
   
-  static constexpr bool do_inv_gen = true;
-  static constexpr bool do_inv_spd = false;
+  static constexpr bool do_inv       = true;
+  static constexpr bool do_inv_sympd = false;
   };
 
 
 
 template<typename T1>
-struct strip_inv< Op<T1, op_inv_spd_default> >
+struct strip_inv< Op<T1, op_inv_sympd> >
   {
   typedef T1 stored_type;
   
   inline
-  strip_inv(const Op<T1, op_inv_spd_default>& X)
+  strip_inv(const Op<T1, op_inv_sympd>& X)
     : M(X.m)
     {
     arma_extra_debug_sigprint();
@@ -113,8 +113,8 @@ struct strip_inv< Op<T1, op_inv_spd_default> >
   
   const T1& M;
   
-  static constexpr bool do_inv_gen = false;
-  static constexpr bool do_inv_spd = true;
+  static constexpr bool do_inv       = true;
+  static constexpr bool do_inv_sympd = true;
   };
 
 

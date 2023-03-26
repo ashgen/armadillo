@@ -33,12 +33,10 @@ op_shuffle::apply_direct(Mat<eT>& out, const Mat<eT>& X, const uword dim)
   
   const uword N = (dim == 0) ? X.n_rows : X.n_cols;
   
+  
   // see op_sort_index_bones.hpp for the definition of arma_sort_index_packet
   // and the associated comparison functor
-  
-  typedef arma_sort_index_packet<int> packet;
-  
-  std::vector<packet> packet_vec(N);
+  std::vector< arma_sort_index_packet<int> > packet_vec(N);
   
   for(uword i=0; i<N; ++i)
     {
